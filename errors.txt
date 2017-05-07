@@ -2,8 +2,8 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 18: choice menuitem expects a non-empty block.
-    "le démon":
-               ^
+File "game/script.rpy", line 23: Line is indented, but the preceding say statement statement does not expect a block. Please check this line's indentation.
+    return
+    ^
 
 Ren'Py Version: Ren'Py 6.99.12.4.2187
