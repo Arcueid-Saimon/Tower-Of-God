@@ -19,7 +19,8 @@ label start:
     
     hide w1
     "Intrigué par cette tour vous décidez de partir à sa découverte à vos risques et périls"
-    return
+    "Vous vous mettez en route de cette tour prestement."
+     return
 
 label demon:
     scene bg demon
