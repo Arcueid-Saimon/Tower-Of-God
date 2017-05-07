@@ -12,7 +12,7 @@
 ##
 ## The _() surrounding the string marks it as eligible for translation.
 
-define config.name = _("Tower of God")
+define config.name = _("Tower-Of-God")
 
 
 ## Determines if the title given above is shown on the main menu screen. Set
@@ -36,7 +36,7 @@ define gui.about = _("")
 ## distribution. This must be ASCII-only, and must not contain spaces, colons,
 ## or semicolons.
 
-define build.name = "TowerofGod"
+define build.name = "Tower-Of-God"
 
 
 ## Sounds and music ############################################################
@@ -136,7 +136,7 @@ default preferences.afm_time = 15
 ## This generally should not be changed, and if it is, should always be a
 ## literal string, not an expression.
 
-define config.save_directory = "TowerofGod-1494172809"
+define config.save_directory = "Tower-Of-God-1494176302"
 
 
 ## Icon ########################################################################
