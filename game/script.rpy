@@ -1,14 +1,15 @@
-image bg auberge = "120609.jpg"
+
 image w1 = "Elena_tease.png"
-image bg chemin = "130517"
 image bg demon = "demon.jpg"
 init -1:
-    python hide:
+    python hide:s
         config.developer = True
         config.window_title = "Tower of God"
 init 0:
     define m = Character("Moi",color="#c8ffc8")
     define n = Character("Narrateur",color="#c8c8ff")
+    image bg auberge = im.Scale("120609.jpg",1280,720)
+    image bg chemin = im.Scale("130517.jpg",1280,720)
     
 label start:
     scene bg auberge
