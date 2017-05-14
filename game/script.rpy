@@ -15,6 +15,7 @@ init 0:
     image bg chemin = im.Scale("130517.jpg",1280,720)
     
 label start:
+    play music "sounds/Black Desert Online Glish.mp3"
     scene bg auberge
     show w1 at left
     
