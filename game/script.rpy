@@ -5,7 +5,10 @@ init -1:
     python hide:
         config.developer = True
         config.window_title = "Tower of God"
-        
+init 0:
+    define m = Character("Moi",color="#c8ffc8")
+    define n = Character("Narrateur",color="#c8c8ff")
+    
 label start:
     scene bg auberge
     show w1 at left
@@ -18,8 +21,8 @@ label start:
     "Personne n'en est jamais ressorti vivant"
     
     hide w1
-    "Intrigué par cette tour vous décidez de partir à sa découverte à vos risques et périls"
-    "Vous vous mettez en route de cette tour prestement."
+    n "Intrigué par cette tour vous décidez de partir à sa découverte à vos risques et périls"
+    n "Vous vous mettez en route de cette tour prestement."
     return
 
 label demon:
