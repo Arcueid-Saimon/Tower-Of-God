@@ -1,5 +1,5 @@
-image bg auberge = "120609.jpg"
-image w1 = "characterw1.jpg"
+image bg auberge = "120612.jpg"
+image w1 = "Elena_tease.png"
 image bg demon = "demon.jpg"
 init -1:
     python hide:
