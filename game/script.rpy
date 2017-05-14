@@ -1,5 +1,7 @@
 
-image w1 = "Elena_tease.png"
+image w1 = "healer_shysmile.png"
+image w2 = "healer_neutralclosed.png"
+image w3 = "healer_neutral.png"
 image bg demon = "demon.jpg"
 init -1:
     python hide:s
@@ -18,12 +20,17 @@ label start:
     
     A "Ah, je vois que tu es enfin réveillé !"
     A "Tu m'as surpris à parler dans ton sommeil."
+    hide w1
+    show w2 at left
     A "Il m'a semblé t'entendre mentionner une tour."
     A "Justement, il y en a une dans les environs."
+    hide w2
+    show w3 at left
     A "Mais surtout ne t'avise pas d'y mettre les pieds."
-    A "Personne n'en est jamais ressorti vivant."
     
-    hide w1
+    A "Personne n'en est jamais ressorti vivant."
+    hide w3
+
     n "Intrigué par cette tour, vous partez à l'Aventure !"
     
     scene bg chemin
