@@ -45,3 +45,8 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+game/cache/bytecode.rpyb
+*.rpyb
+game/cache/bytecode.rpyb
+*.rpyb
+game/saves/persistent
