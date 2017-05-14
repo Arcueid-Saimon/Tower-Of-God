@@ -50,3 +50,5 @@ game/cache/bytecode.rpyb
 game/cache/bytecode.rpyb
 *.rpyb
 game/saves/persistent
+.save
+.txt
