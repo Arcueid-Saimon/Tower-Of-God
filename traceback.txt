@@ -1,28 +1,20 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 12, in script
-    image bg auberge = In.scale("120609.jpg",1280,720)
-  File "game/script.rpy", line 12, in <module>
-    image bg auberge = In.scale("120609.jpg",1280,720)
-NameError: name 'In' is not defined
+  File "game/script.rpy", line 46, in script
+    jump infos
+ScriptError: could not find label 'infos'.
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "C:\Ren Py\renpy-6.99.12.4-sdk\renpy\bootstrap.py", line 295, in bootstrap
-    renpy.main.main()
-  File "C:\Ren Py\renpy-6.99.12.4-sdk\renpy\main.py", line 419, in main
-    game.context().run(node)
-  File "game/script.rpy", line 12, in script
-    image bg auberge = In.scale("120609.jpg",1280,720)
-  File "C:\Ren Py\renpy-6.99.12.4-sdk\renpy\ast.py", line 907, in execute
-    img = renpy.python.py_eval_bytecode(self.code.bytecode)
-  File "C:\Ren Py\renpy-6.99.12.4-sdk\renpy\python.py", line 1743, in py_eval_bytecode
-    return eval(bytecode, globals, locals)
-  File "game/script.rpy", line 12, in <module>
-    image bg auberge = In.scale("120609.jpg",1280,720)
-NameError: name 'In' is not defined
+  File "game/script.rpy", line 46, in script
+    jump infos
+  File "D:\Users\xakuyer\Desktop\Python\renpy-6.99.12.4-sdk\renpy\ast.py", line 1527, in execute
+    rv = renpy.game.script.lookup(target)
+  File "D:\Users\xakuyer\Desktop\Python\renpy-6.99.12.4-sdk\renpy\script.py", line 858, in lookup
+    raise ScriptError("could not find label '%s'." % str(original))
+ScriptError: could not find label 'infos'.
 
 Windows-8-6.2.9200
 Ren'Py 6.99.12.4.2187

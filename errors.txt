@@ -2,8 +2,8 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 31: Line is indented, but the preceding say statement statement does not expect a block. Please check this line's indentation.
-    hide w3
-    ^
+File "game/script.rpy", line 48: choice menuitem expects a non-empty block.
+    "Partir sans entendre ce que le garde a à vous dire":
+                                                         ^
 
 Ren'Py Version: Ren'Py 6.99.12.4.2187
