@@ -2,10 +2,7 @@
 image w1 = "healer_shysmile.png"
 image w2 = "healer_neutralclosed.png"
 image w3 = "healer_neutral.png"
-image m1 = "guard_angry.png"
-image m2 = "guard_neutral.png"
-image m3 = "guard_thinking.png"
-image you = "militia_neutral.png"
+image vous = "militia_neutral.png"
 
 init -1:
     python hide:
@@ -18,13 +15,19 @@ init 0:
     define g = Character("Garde",color="#c8c8ff")
     image bg auberge = im.Scale("120609.jpg",1280,720)
     image bg chemin = im.Scale("130517.jpg",1280,720)
-    
+    image m1 = im.Scale("marquis_concerned.png",375,650)
+    image m2 = im.Scale("marquis_smile.png",375,650)
+    image m3 = im.Scale("marquis_defensefierce.png",375,650)
+
 label start:
     $ renseignements = False
     play music "sounds/Black Desert Online Glish.mp3"
+    v "..."
+    v "...Oh..."
+    v "... Où...Où suis je?"
+      
     scene bg auberge
     show w1 at left
-    
     A "Ah, je vois que tu es enfin réveillé !"
     A "Tu m'as surpris à parler dans ton sommeil."
     hide w1
@@ -44,10 +47,10 @@ label start:
     g "Si tu venais à t'approcher de la tour dans les environs, je voudrais d'abord te donner certains renseignements et conseils."
     
     menu:
-        "Accepter la proposition du garde":
+        "Accepter la proposition du chef de la garde":
             jump garde
             
-        "Partir sans entendre ce que le garde a à vous dire":
+        "Partir sans entendre ce que le chef de la garde a à vous dire":
             jump depart
 
 label garde:
@@ -125,7 +128,7 @@ label disparus:
     g " Vois-tu, aucun d'eux n'est ressorti, du moins vivant..."
     g "Es-tu vraiment prêt à affronter ce que renferme cette tour ?"
     hide m3
-    show you at right
+    show vous at right
     v "Déterminé !"
     hide you
     show m2 at left
@@ -143,18 +146,20 @@ label depart:
         g "Reviens ici après avoir triomphé de la tour, j'ai confiance en toi !"
         g "Et, bonne chance !"
         hide m2
+        scene bg chemin
         n "Après vous être renseigné auprès du garde, vous partez à l'Aventure !"
     else:
         g "Très bien, je comprends que tu ne veuilles pas écouter ce que j'ai à te dire."
         g "Reviens ici après avoir triomphé de la tour, j'ai confiance en toi !"
         g "Et, bonne chance !"
         hide m2
+        scene bg chemin
         n "Vous entamez ainsi votre Aventure !"
     
-    scene bg chemin
     n "Vous atteignez la tour et décidez d'entrer pour tenter votre chance."
     n "La porte s'ouvre dans un long grincement puis vous y pénétrez."
     n "Aussitôt entré, aussitôt enfermé, la porte se referme sur vous."
     n "Il ne vous reste donc plus qu'un seul moyen de sortir d'ici, avancer vers l'inconnu !"
+    
        
     return
