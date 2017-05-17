@@ -2,8 +2,12 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 48: choice menuitem expects a non-empty block.
-    "Partir sans entendre ce que le garde a à vous dire":
-                                                         ^
+File "game/script.rpy", line 24: expected ':' not found.
+    init python in mystore 1:
+                           ^
+
+File "game/script.rpy", line 38: expected ':' not found.
+    init python 2:
+                ^
 
 Ren'Py Version: Ren'Py 6.99.12.4.2187

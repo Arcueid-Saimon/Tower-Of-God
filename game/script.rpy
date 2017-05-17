@@ -3,7 +3,7 @@ image w1 = "healer_shysmile.png"
 image w2 = "healer_neutralclosed.png"
 image w3 = "healer_neutral.png"
 image vous = "militia_neutral.png"
-image m1 = "lucifer.png"
+image crea1 = "lucifer.png"
 
 init -1:
     python hide:
@@ -21,21 +21,23 @@ init 0:
     image m2 = im.Scale("marquis_smile.png",375,650)
     image m3 = im.Scale("marquis_defensefierce.png",375,650)
     
-init python in mystore 1:
+init python in mystore:
     import random
+    
+    valeur_de = 0
+    valeur_totale = 0
+    i = 1
 
     def tirage_de(lancers):
         global valeur_totale
-        valeur_de = 0
-        valeur_totale = 0
-        i = 1
+        
         for i in range(lancers):
-            valeur_de = (randint(1,6))
+            valeur_de = renpy.random.randint(1,6)
             valeur_totale = valeur_totale + valeur_de
         
         return valeur_totale
         
-init python 2:
+init python:
     import store.mystore as mystore
             
     
@@ -43,8 +45,9 @@ label start:
     python:
         renseignements = False
         player_health = 50
-        ennemy_health = 20
-        damage = mystore.valeur_de()
+        enemy_health = 20
+        player_damage = mystore.tirage_de(2)
+        enemy_damage = mystore.tirage_de(2)
     play music "sounds/Black Desert Online Glish.mp3"
     scene bg noir
     v "..."
@@ -188,10 +191,11 @@ label depart:
     
     jump combat
     
-label combat: # ceci est un test !
-    show m1 at left
+label combat: # ceci est un test qui marche avec des trucs à régler dessus quand meme
+    show crea1 at topleft
     python:
-        player_health = max(player_health - damage, 0)
-        nemy_health = min(enemy_health + damage, enemy_max_health)
-    
+        player_health = max(player_health - enemy_damage, 0)
+        enemy_health = max(enemy_health - player_damage, 0)
+    "Vous infligez [player_damage] dégats à l'ennemi."
+    "L'ennemi vous a infligé [enemy_damage] dégats."
     return
