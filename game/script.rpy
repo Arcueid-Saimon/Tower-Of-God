@@ -12,7 +12,8 @@ init 0:
     define A = Character("Alice",color="#c8ffc8")
     define v = Character("Vous",color="#c8ffc8")
     define n = Character("Narrateur",color="#c8c8ff")
-    define g = Character("Garde",color="#c8c8ff")
+    define g = Character("Chef de la Garde",color="#c8c8ff")
+    image bg noir = im.Scale("fond_noir.jpg",1280,720)
     image bg auberge = im.Scale("120609.jpg",1280,720)
     image bg chemin = im.Scale("130517.jpg",1280,720)
     image m1 = im.Scale("marquis_concerned.png",375,650)
@@ -22,6 +23,7 @@ init 0:
 label start:
     $ renseignements = False
     play music "sounds/Black Desert Online Glish.mp3"
+    scene bg noir
     v "..."
     v "...Oh..."
     v "... Où...Où suis je?"
