@@ -3,6 +3,7 @@ image w1 = "healer_shysmile.png"
 image w2 = "healer_neutralclosed.png"
 image w3 = "healer_neutral.png"
 image vous = "militia_neutral.png"
+image m1 = "lucifer.png"
 
 init -1:
     python hide:
@@ -19,9 +20,31 @@ init 0:
     image m1 = im.Scale("marquis_concerned.png",375,650)
     image m2 = im.Scale("marquis_smile.png",375,650)
     image m3 = im.Scale("marquis_defensefierce.png",375,650)
+    
+init python in mystore 1:
+    import random
 
+    def tirage_de(lancers):
+        global valeur_totale
+        valeur_de = 0
+        valeur_totale = 0
+        i = 1
+        for i in range(lancers):
+            valeur_de = (randint(1,6))
+            valeur_totale = valeur_totale + valeur_de
+        
+        return valeur_totale
+        
+init python 2:
+    import store.mystore as mystore
+            
+    
 label start:
-    $ renseignements = False
+    python:
+        renseignements = False
+        player_health = 50
+        ennemy_health = 20
+        damage = mystore.valeur_de()
     play music "sounds/Black Desert Online Glish.mp3"
     scene bg noir
     v "..."
@@ -163,5 +186,12 @@ label depart:
     n "Aussitôt entré, aussitôt enfermé, la porte se referme sur vous."
     n "Il ne vous reste donc plus qu'un seul moyen de sortir d'ici, avancer vers l'inconnu !"
     
-       
+    jump combat
+    
+label combat: # ceci est un test !
+    show m1 at left
+    python:
+        player_health = max(player_health - damage, 0)
+        nemy_health = min(enemy_health + damage, enemy_max_health)
+    
     return
