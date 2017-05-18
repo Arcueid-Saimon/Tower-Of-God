@@ -4,6 +4,7 @@ image w2 = "healer_neutralclosed.png"
 image w3 = "healer_neutral.png"
 image vous = "militia_neutral.png"
 image crea1 = "lucifer.png"
+image dagues = "dagues.jpg"
 
 init -1:
     python hide:
@@ -21,6 +22,7 @@ init 0:
     image m2 = im.Scale("marquis_smile.png",375,650)
     image m3 = im.Scale("marquis_defensefierce.png",375,650)
     image bg mort = im.Scale("mort_v1.jpg",1280,720)
+    image lames = SnowBlossom("dagues.jpg",count = 12,border = 50,xspeed=(20, 50),yspeed=(100, 200),start=0,horizontal = False)
     
 init python in mystore:
     import random
@@ -44,7 +46,7 @@ label start:
     python:
         renseignements = False
         mort_par_monstre = False
-        player_health = 50
+        player_health = 1
         enemy_health = 20
         max_player_health = 50
         max_enemy_health = 20
@@ -216,6 +218,7 @@ label combat: # ceci est un test qui marche avec des trucs à régler dessus qua
             
 label mort:
     scene bg mort
+    show lames
     if mort_par_monstre:
         "Vous avez succombé à vos blessures..."
     else:
