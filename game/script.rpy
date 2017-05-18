@@ -165,7 +165,7 @@ label disparus:
     hide m3
     show vous at right
     v "Déterminé !"
-    hide you
+    hide vous
     show m2 at left
     g "Soit, je te laisserai y aller dans ce cas là."
     
