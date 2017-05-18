@@ -2,12 +2,8 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 24: expected ':' not found.
-    init python in mystore 1:
-                           ^
-
-File "game/script.rpy", line 38: expected ':' not found.
-    init python 2:
-                ^
+File "game/script.rpy", line 206: expected statement.
+    else:
+        ^
 
 Ren'Py Version: Ren'Py 6.99.12.4.2187

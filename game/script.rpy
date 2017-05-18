@@ -20,20 +20,19 @@ init 0:
     image m1 = im.Scale("marquis_concerned.png",375,650)
     image m2 = im.Scale("marquis_smile.png",375,650)
     image m3 = im.Scale("marquis_defensefierce.png",375,650)
+    image bg mort = im.Scale("mort_v1.jpg",1280,720)
     
 init python in mystore:
     import random
-    
-    valeur_de = 0
-    valeur_totale = 0
-    i = 1
 
-    def tirage_de(lancers):
+    def lancer_de(lancers):
         global valeur_totale
-        
+        d6_roll = 0
+        valeur_totale = 0
+        i = 1
         for i in range(lancers):
-            valeur_de = renpy.random.randint(1,6)
-            valeur_totale = valeur_totale + valeur_de
+            d6_roll = renpy.random.randint(1,6)
+            valeur_totale = valeur_totale + d6_roll
         
         return valeur_totale
         
@@ -44,10 +43,11 @@ init python:
 label start:
     python:
         renseignements = False
+        mort_par_monstre = False
         player_health = 50
         enemy_health = 20
-        player_damage = mystore.tirage_de(2)
-        enemy_damage = mystore.tirage_de(2)
+        max_player_health = 50
+        max_enemy_health = 20
     play music "sounds/Black Desert Online Glish.mp3"
     scene bg noir
     v "..."
@@ -194,8 +194,31 @@ label depart:
 label combat: # ceci est un test qui marche avec des trucs à régler dessus quand meme
     show crea1 at topleft
     python:
+        player_damage = mystore.lancer_de(2)
+        enemy_damage = mystore.lancer_de(2)
         player_health = max(player_health - enemy_damage, 0)
         enemy_health = max(enemy_health - player_damage, 0)
-    "Vous infligez [player_damage] dégats à l'ennemi."
-    "L'ennemi vous a infligé [enemy_damage] dégats."
+    "Vous infligez [player_damage] dégats à l'ennemi. Il lui reste [enemy_health]/[max_enemy_health] points de vie."
+    "L'ennemi vous a infligé [enemy_damage] dégats. Il vous reste [player_health]/[max_player_health] points de vie."
+    
+    if player_health>0 and enemy_health>0:
+        jump combat
+        
+    else:
+        if enemy_health == 0:
+            "Vous avez triomphé de l'ennemi !"
+            
+            return
+        else:
+            "L'ennemi était trop fort pour vous !"
+            $ mort_par_monstre = True
+            jump mort
+            
+label mort:
+    scene bg mort
+    if mort_par_monstre:
+        "Vous avez succombé à vos blessures..."
+    else:
+        "L'aventure s'arrête ici pour vous ..."
+        
     return
