@@ -1,10 +1,9 @@
 
-image w1 = "healer_shysmile.png"
-image w2 = "healer_neutralclosed.png"
-image w3 = "healer_neutral.png"
-image vous = "militia_neutral.png"
-image crea1 = "lucifer.png"
-image dagues = "dagues.jpg"
+image w1 = "Characters/healer_shysmile.png"
+image w2 = "Characters/healer_neutralclosed.png"
+image w3 = "Characters/healer_neutral.png"
+image vous = "Characters/militia_neutral.png"
+image crea1 = "Mobs/lucifer.png"
 
 init -1:
     python hide:
@@ -15,14 +14,17 @@ init 0:
     define v = Character("Vous",color="#c8ffc8")
     define n = Character("Narrateur",color="#c8c8ff")
     define g = Character("Chef de la Garde",color="#c8c8ff")
-    image bg noir = im.Scale("fond_noir.jpg",1280,720)
-    image bg auberge = im.Scale("120609.jpg",1280,720)
-    image bg chemin = im.Scale("130517.jpg",1280,720)
-    image m1 = im.Scale("marquis_concerned.png",375,650)
-    image m2 = im.Scale("marquis_smile.png",375,650)
-    image m3 = im.Scale("marquis_defensefierce.png",375,650)
-    image bg mort = im.Scale("mort_v1.jpg",1280,720)
-    image lames = SnowBlossom("dagues.jpg",count = 12,border = 50,xspeed=(20, 50),yspeed=(100, 200),start=0,horizontal = False)
+    image bg noir = im.Scale("BG/fond_noir.jpg",1280,720)
+    image bg auberge = im.Scale("BG/120609.jpg",1280,720)
+    image bg chemin = im.Scale("BG/130517.jpg",1280,720)
+    image m1 = im.Scale("Characters/marquis_concerned.png",375,650)
+    image m2 = im.Scale("Characters/marquis_smile.png",375,650)
+    image m3 = im.Scale("Characters/marquis_defensefierce.png",375,650)
+    image bg mort = im.Scale("BG/mort_v1.jpg",1280,720)
+    image bg crypte = im.Scale("BG/blood_pond.jpg",1280,720)
+    image levia = im.Scale("Mobs/leviathan.png",541,382)
+    image bg city = im.Scale("BG/watery_graveyard.jpg",1280,720)
+    image satan = SnowBlossom("Sprites/bulletCa000.png",count = 10,border = 50,xspeed=(20, 10),yspeed=(100, 200),start=0,horizontal = False)
     
 init python in mystore:
     import random
@@ -46,10 +48,13 @@ label start:
     python:
         renseignements = False
         mort_par_monstre = False
-        player_health = 1
+        player_health = 100
         enemy_health = 20
-        max_player_health = 50
+        max_player_health = 100
         max_enemy_health = 20
+        fuite_faite = False
+        levia_fuit = False
+        levia_mort = False
     play music "sounds/Black Desert Online Glish.mp3"
     scene bg noir
     v "..."
@@ -191,10 +196,43 @@ label depart:
     n "Aussitôt entré, aussitôt enfermé, la porte se referme sur vous."
     n "Il ne vous reste donc plus qu'un seul moyen de sortir d'ici, avancer vers l'inconnu !"
     
-    jump combat
+    jump entree
+
+label entree:
+    show bg city
+    n "Ainsi vous commencez votre exploration."
+    n "Vous entendez du bruit dans le bâtiment central."
+    n "Vous vous approchez donc pour découvrir ce qui fait un bruit pareil."
+    jump rencontre_levia
     
-label combat: # ceci est un test qui marche avec des trucs à régler dessus quand meme
-    show crea1 at topleft
+label rencontre_levia:
+    show levia at truecenter
+    n "Vous rencontrez une créature aux airs de serpent, vous vous approchez de lui avec méfiance."
+    n "Que décidez-vous de faire?"
+    
+    menu:
+        "Combattre ce léviathan":
+            jump combat
+        "Tenter de fuir":
+            jump fuite
+            
+label fuite:
+    $ fuir = mystore.lancer_de(1)
+    if not fuite_faite:
+        "Pour fuir, vous devrez obtenir moins de 3."
+        $ fuite_faite = True
+    if fuir >= 3:
+        "Vous obtenez [fuir] au lancer de dé."
+        "Vous ne parvenez pas à vous enfuir..."
+        jump combat
+    else:
+        "Vous obtenez [fuir] au lancer de dé"
+        "Vous donc parvenez à vous enfuir !"
+        if not levia_fuit:
+            $ levia_fuit = True
+            jump suite_levia
+    
+label combat:
     python:
         player_damage = mystore.lancer_de(2)
         enemy_damage = mystore.lancer_de(2)
@@ -204,21 +242,33 @@ label combat: # ceci est un test qui marche avec des trucs à régler dessus qua
     "L'ennemi vous a infligé [enemy_damage] dégats. Il vous reste [player_health]/[max_player_health] points de vie."
     
     if player_health>0 and enemy_health>0:
-        jump combat
+            jump combat
         
     else:
         if enemy_health == 0:
             "Vous avez triomphé de l'ennemi !"
-            
-            return
+            $enemy_health = max_enemy_health
+            if not levia_mort:
+                $ levia_mort = True
+                jump suite_levia
         else:
             "L'ennemi était trop fort pour vous !"
             $ mort_par_monstre = True
             jump mort
             
+label suite_levia:
+    show bg crypte
+    hide levia
+    if levia_mort:
+        n "Après avoir occis ce monstrueux dragon, vous arrivez dans une crypte..."
+    if levia_fuit:
+        n "Après avoir échappé à ce monstrueux dragon en vous faufilant derrière lui, vous arrivez dans une crypte..."
+    
+    return
+
 label mort:
     scene bg mort
-    show lames
+    show satan
     if mort_par_monstre:
         "Vous avez succombé à vos blessures..."
     else:
