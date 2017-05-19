@@ -24,6 +24,7 @@ init 0:
     image bg crypte = im.Scale("BG/blood_pond.jpg",1280,720)
     image levia = im.Scale("Mobs/leviathan.png",541,382)
     image bg city = im.Scale("BG/watery_graveyard.jpg",1280,720)
+    image bg blood = im.Scale("BG/blood_marsh.jpg",1280,720)
     image satan = SnowBlossom("Sprites/bulletCa000.png",count = 10,border = 50,xspeed=(20, 10),yspeed=(100, 200),start=0,horizontal = False)
     
 init python in mystore:
@@ -263,9 +264,38 @@ label suite_levia:
         n "Après avoir occis ce monstrueux dragon, vous arrivez dans une crypte..."
     if levia_fuit:
         n "Après avoir échappé à ce monstrueux dragon en vous faufilant derrière lui, vous arrivez dans une crypte..."
+    n "Vous remarquez un tombeau sur votre gauche et un bassin vraisemblalement rempli de sang en face de vous."
+    n "Que décidez-vous de faire ?"
+    
+    menu:
+        "S'approcher du bassin et l'observer":
+            jump absorbe
+            
+        "Tenter d'ouvrir le tombeau":
+            jump maudit
+            
+        "Emprunter les escaliers":
+            jump ray
+            
+label absorbe:
+    n "Vous vous approchez donc du bassin, vous penchez pour vérifier que le liquide rouge est bien du sang."
+    n "Ainsi vous tombez à la renverse et êtes absorbé par le bassin..."
+    show bg blood
+    n " Vous atterissez sans problème mais déboussolé."
+    n "Vous découvrez les terres marécageuses qui se profilent devant vous."
     
     return
-
+    
+label maudit:
+    n "a faire"
+    
+    return
+    
+label ray:
+    n "pareil"
+    
+    return
+    
 label mort:
     scene bg mort
     show satan
