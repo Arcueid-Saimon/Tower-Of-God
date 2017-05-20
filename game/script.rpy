@@ -182,6 +182,7 @@ label depart:
         g "Reviens ici après avoir triomphé de la tour, j'ai confiance en toi !"
         g "Et, bonne chance !"
         hide m2
+        stop music
         scene bg chemin
         n "Après vous être renseigné auprès du garde, vous partez à l'Aventure !"
     else:
@@ -204,9 +205,13 @@ label entree:
     n "Ainsi vous commencez votre exploration."
     n "Vous entendez du bruit dans le bâtiment central."
     n "Vous vous approchez donc pour découvrir ce qui fait un bruit pareil."
+    
     jump rencontre_levia
     
+    
 label rencontre_levia:
+    stop music
+    play music "sounds/David Fenn Titans.mp3" loop
     show levia at truecenter
     n "Vous rencontrez une créature aux airs de serpent, vous vous approchez de lui avec méfiance."
     n "Que décidez-vous de faire?"
