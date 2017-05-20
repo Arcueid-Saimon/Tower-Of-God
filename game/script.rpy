@@ -57,7 +57,7 @@ label start:
         fuite_faite = False
         levia_fuit = False
         levia_mort = False
-    play music "sounds/Black Desert Online Glish.mp3"
+    play music "sounds/Black Desert Online Glish.mp3" fadeout 2.0
     scene bg noir
     v "..."
     v "...Oh..."
@@ -71,15 +71,19 @@ label start:
     show w2 at left
     A "Il m'a semblé t'entendre mentionner une tour."
     A "Justement, il y en a une dans les environs."
+    A "c'est la légendaire Tour Des Dieux."
+    A "l'un des seuls et derniers contactes que les humains peuvent avoir avec les Dieux et les Démons."
     hide w2
     show w3 at left
-    A "Mais surtout ne t'avise pas d'y mettre les pieds."
-    
-    A "Personne n'en est jamais ressorti vivant."
-    
+    A "Mais surtout ne t'avise pas d'y mettre les pieds..."
+    A "De Terribles choses s'y sont produites et personnes n'en est jamais ressorti vivant."
+    A "Ah, Des clients! Il faut que j'y aille!"
+    A "Si tu as des questions vas les poser au Commandant du Bataillon d'Exploration, il est assez reconnaissable c'est celui qui porte la plus grosse armure!"
     hide w3
     show m1 at left
-    g "Hé, là toi !!"
+    v "...euh excusez moi?"
+    g "hein? oui qu'est ce qu'il ya?"
+    v "Pourriez vous me donner quelques informations sur la tour des dieux?"
     g "Viens par ici ! Tu es un aventurier à ce que je vois."
     g "Si tu venais à t'approcher de la tour dans les environs, je voudrais d'abord te donner certains renseignements et conseils."
     
@@ -183,7 +187,6 @@ label depart:
         g "Reviens ici après avoir triomphé de la tour, j'ai confiance en toi !"
         g "Et, bonne chance !"
         hide m2
-        stop music
         scene bg chemin
         n "Après vous être renseigné auprès du garde, vous partez à l'Aventure !"
     else:
@@ -195,7 +198,7 @@ label depart:
         n "Vous entamez ainsi votre Aventure !"
         
     
-label foret:
+#label foret:
     
     
     
@@ -219,8 +222,8 @@ label entree:
     
     
 label rencontre_levia:
-    stop music
-    play music "sounds/David Fenn Titans.mp3" loop
+    stop music fadeout 1.0
+    play music "sounds/David Fenn Titans.mp3" fadeout 2.0
     show levia at truecenter
     n "Vous rencontrez une créature aux airs de serpent, vous vous approchez de lui avec méfiance."
     n "Que décidez-vous de faire?"
