@@ -2,8 +2,7 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 206: expected statement.
-    else:
-        ^
+File "game/gui.rpy", line 88: is not terminated with a newline. (Check strings and parenthesis.)
+    define gui.main_menu_background = im.Scale("BG/174.jpg",1280,720
 
 Ren'Py Version: Ren'Py 6.99.12.4.2187

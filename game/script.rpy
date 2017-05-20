@@ -17,6 +17,7 @@ init 0:
     image bg noir = im.Scale("BG/fond_noir.jpg",1280,720)
     image bg auberge = im.Scale("BG/120609.jpg",1280,720)
     image bg chemin = im.Scale("BG/130517.jpg",1280,720)
+    image bg foret1 = im.Scale("BG/110618_.jpg",1280,720)
     image m1 = im.Scale("Characters/marquis_concerned.png",375,650)
     image m2 = im.Scale("Characters/marquis_smile.png",375,650)
     image m3 = im.Scale("Characters/marquis_defensefierce.png",375,650)
@@ -192,6 +193,14 @@ label depart:
         hide m2
         scene bg chemin
         n "Vous entamez ainsi votre Aventure !"
+        
+    
+label foret:
+    
+    
+    
+    
+    
     
     n "Vous atteignez la tour et décidez d'entrer pour tenter votre chance."
     n "La porte s'ouvre dans un long grincement puis vous y pénétrez."
