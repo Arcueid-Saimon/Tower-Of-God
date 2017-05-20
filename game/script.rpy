@@ -84,7 +84,9 @@ label start:
     v "...euh excusez moi?"
     g "hein? oui qu'est ce qu'il ya?"
     v "Pourriez vous me donner quelques informations sur la tour des dieux?"
-    g "Viens par ici ! Tu es un aventurier à ce que je vois."
+    g "Ah tu es un aventurié n'est ce pas?"
+    g "mon dieu pourquoi êtes vous tous aussi suicidaires? cette tour est dangereuse vous le savez au moins?"
+    v "Oui je sais mais je sens que quelque chose m'appelle dans cette tour"
     g "Si tu venais à t'approcher de la tour dans les environs, je voudrais d'abord te donner certains renseignements et conseils."
     
     menu:
@@ -194,17 +196,19 @@ label depart:
         g "Reviens ici après avoir triomphé de la tour, j'ai confiance en toi !"
         g "Et, bonne chance !"
         hide m2
-        scene bg chemin
         n "Vous entamez ainsi votre Aventure !"
         
     
-#label foret:
+label foret:
+    scene bg foret1
+    play sound "sounds/heavyrainthunder.mp3"
+    play music "sounds/021.(未知Artist) - 揺らめく禁忌.mp3" fadein 2.0
+    v "wah.... Quelle foret, le mouvement des arbres et les rayons du soleil à travers les feuilles"
     
     
     
     
-    
-    
+    scene bg chemin
     n "Vous atteignez la tour et décidez d'entrer pour tenter votre chance."
     n "La porte s'ouvre dans un long grincement puis vous y pénétrez."
     n "Aussitôt entré, aussitôt enfermé, la porte se referme sur vous."
