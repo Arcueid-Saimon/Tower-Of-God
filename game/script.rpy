@@ -50,8 +50,8 @@ init python in mystore:
 
 init python:
 
-    vpunch = Move((0, 10), (0, -10), .10, bounce=True, repeat=True, delay=.275)
-    hpunch = Move((15, 0), (-15, 0), .10, bounce=True, repeat=True, delay=.275)
+    vpunch = Move((0,10), (0, -10), .10, bounce=True, repeat=True, delay=1.0)
+    hpunch = Move((15,10), (15, 10), .10, bounce=True, repeat=True, delay=.275)
     import store.mystore as mystore
 
     
@@ -482,6 +482,7 @@ label combat:
         enemy_damage = mystore.lancer_de(2)
         player_health = max(player_health - enemy_damage, 0)
         enemy_health = max(enemy_health - player_damage, 0)
+    play sound"sounds/sword.mp3"
     "Vous infligez [player_damage] dégats à l'ennemi. Il lui reste [enemy_health]/[max_enemy_health] points de vie." with vpunch
     "L'ennemi vous a infligé [enemy_damage] dégats. Il vous reste [player_health]/[max_player_health] points de vie." with vpunch
     

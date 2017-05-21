@@ -1,20 +1,28 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 525, in script
-    jump rencontre_behem
-ScriptError: could not find label 'rencontre_behem'.
+  File "game/script.rpy", line 51, in script
+    init python:
+  File "game/script.rpy", line 54, in <module>
+    hpunch = Move((15,10), (s15, 10), .10, bounce=True, repeat=True, delay=.275)
+NameError: name 's15' is not defined
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/script.rpy", line 525, in script
-    jump rencontre_behem
-  File "C:\Ren Py\renpy-6.99.12.4-sdk\renpy\ast.py", line 1527, in execute
-    rv = renpy.game.script.lookup(target)
-  File "C:\Ren Py\renpy-6.99.12.4-sdk\renpy\script.py", line 858, in lookup
-    raise ScriptError("could not find label '%s'." % str(original))
-ScriptError: could not find label 'rencontre_behem'.
+  File "C:\Ren Py\renpy-6.99.12.4-sdk\renpy\bootstrap.py", line 295, in bootstrap
+    renpy.main.main()
+  File "C:\Ren Py\renpy-6.99.12.4-sdk\renpy\main.py", line 419, in main
+    game.context().run(node)
+  File "game/script.rpy", line 51, in script
+    init python:
+  File "C:\Ren Py\renpy-6.99.12.4-sdk\renpy\ast.py", line 814, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "C:\Ren Py\renpy-6.99.12.4-sdk\renpy\python.py", line 1719, in py_exec_bytecode
+    exec bytecode in globals, locals
+  File "game/script.rpy", line 54, in <module>
+    hpunch = Move((15,10), (s15, 10), .10, bounce=True, repeat=True, delay=.275)
+NameError: name 's15' is not defined
 
 Windows-8-6.2.9200
 Ren'Py 6.99.12.4.2187
