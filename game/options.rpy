@@ -60,7 +60,7 @@ define config.has_voice = True
 ## the player is at the main menu. This file will continue playing into the
 ## game, until it is stopped or another file is played.
 
-define config.main_menu_music = "sounds/01 - Lost world.mp3"
+define config.main_menu_music = "sounds/01.Tales of Symphonia.mp3"
 
 
 ## Transitions #################################################################
@@ -143,7 +143,7 @@ define config.save_directory = "Tower-Of-God-1494176302"
 ##
 ## The icon displayed on the taskbar or dock.
 
-define config.window_icon = "gui/window_icon.png"
+define config.window_icon = "gui/tsukumogami.ico"
 
 
 ## Build configuration #########################################################
