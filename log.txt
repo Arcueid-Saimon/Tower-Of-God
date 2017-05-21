@@ -1,37 +1,37 @@
-Sun May 21 20:13:05 2017
+Sun May 21 21:28:58 2017
 Windows-8-6.2.9200
 Ren'Py 6.99.12.4.2187
  
 
-Bootstrap to the start of init.init took 0.41s
+Bootstrap to the start of init.init took 0.28s
 Early init took 0.04s
-Loader init took 0.06s
-Loading error handling took 0.12s
-Loading script took 1.48s
-Loading persistent took 0.05s
+Loader init took 0.05s
+Loading error handling took 0.06s
+Loading script took 0.88s
+Loading persistent took 0.03s
 Importing _renpysteam: ImportError('No module named _renpysteam',)
-Running init code took 0.50s
-Loading analysis data took 0.11s
-Analyze and compile ATL took 0.02s
+Running init code took 0.32s
+Loading analysis data took 0.08s
+Analyze and compile ATL took 0.01s
 Index archives took 0.00s
 Backing up script files to 'D:\\Users\\xakuyer\\AppData\\Roaming/RenPy/backups\\Tower-Of-God':
-Dump and make backups. took 0.31s
+Dump and make backups. took 0.23s
 Cleaning cache took 0.00s
 Making clean stores took 0.00s
 DPI scale factor: 1.000000
-Creating interface object took 0.07s
+Creating interface object took 0.06s
 Cleaning stores took 0.00s
-Init translation took 0.20s
-Build styles took 0.03s
+Init translation took 0.16s
+Build styles took 0.02s
 Load screen analysis took 0.00s
-Analyze screens took 0.05s
-Save screen analysis took 0.22s
-Prepare screens took 0.23s
+Analyze screens took 0.04s
+Save screen analysis took 0.14s
+Prepare screens took 0.18s
 Save pyanalysis. took 0.00s
-Save bytecode. took 0.12s
-Running _start took 0.01s
+Save bytecode. took 0.09s
+Running _start took 0.00s
 Performance test:
-Interface start took 0.03s
+Interface start took 0.02s
 
 primary display bounds: (0, 0, 1366, 768)
 Windowed mode.
@@ -214,18 +214,18 @@ Texture testing:
 - 512px textures work.
 - 1024px textures work.
 - 2048px textures work.
-Total time until interface ready: 5.12400007248s
+Total time until interface ready: 3.52600002289s
 - Target is 5 frames in 0.333333333333 seconds.
 - Frame drawn at 0.000000 seconds.
-- Frame drawn at 0.044000 seconds.
-- Frame drawn at 0.056000 seconds.
-- Frame drawn at 0.071000 seconds.
-- Frame drawn at 0.088000 seconds.
-- 0.088000 seconds to render 5 frames.
+- Frame drawn at 0.034000 seconds.
+- Frame drawn at 0.048000 seconds.
+- Frame drawn at 0.065000 seconds.
+- Frame drawn at 0.081000 seconds.
+- 0.081000 seconds to render 5 frames.
 Cleaning stores took 0.00s
-Init translation took 0.67s
-Build styles took 0.06s
-Load screen analysis took 0.07s
+Init translation took 0.53s
+Build styles took 0.04s
+Load screen analysis took 0.04s
 Analyze screens took 0.00s
 Prepare screens took 0.00s
 Running _start took 0.01s

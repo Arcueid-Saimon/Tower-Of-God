@@ -32,7 +32,6 @@ init 0:
     
     image bg mort = im.Scale("BG/FIRE.jpg",1280,720)
     image bg crypte = im.Scale("BG/blood_pond.jpg",1280,720)
-    image bg tunnel = im.Scale("BG/100420.jpg",1280,720)
     image levia = im.Scale("Mobs/leviathan.png",541,382)
     image behem = im.Scale("Mobs/behemoth.png",541,382)
     image bg city = im.Scale("BG/watery_graveyard.jpg",1280,720)
@@ -516,8 +515,8 @@ label combat:
         player_health = max(player_health - enemy_damage, 0)
         enemy_health = max(enemy_health - player_damage, 0)
     play sound"sounds/sword.mp3"
-    "L'ennemi vous a infligé [enemy_damage] dégats. Il vous reste [player_health]/[max_player_health] points de vie." with vpunch
-    "Vous infligez [player_damage] dégats à l'ennemi. Il lui reste [enemy_health]/[max_enemy_health] points de vie." with vpunch
+    "L'ennemi vous a infligé [enemy_damage] dégâts. Il vous reste [player_health]/[max_player_health] points de vie." with vpunch
+    "Vous infligez [player_damage] dégâts à l'ennemi. Il lui reste [enemy_health]/[max_enemy_health] points de vie." with vpunch
     
     if player_health>0 and enemy_health>0:
         menu:
@@ -601,12 +600,11 @@ label rencontre_behem:
     return
 
 label suite_behem:
+    show bg cave
     hide behem
-    show bg tunnel
     if not behem_fuit:
         n "Vous avez réussi à terrasser ce mastodonte."
         
-    show bg cave
     menu:
         "Prendre le tunnel de gauche":
             jump gate
@@ -623,7 +621,7 @@ label gate:
         "Se retourner vers lui et le combattre":
             jump combat
             
-        "Tenter une feinte et porfiter pour s'enfuir.":
+        "Tenter une feinte et profiter pour s'enfuir.":
             jump fuite
     
 label field:
