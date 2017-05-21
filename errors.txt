@@ -2,8 +2,6 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 270: end of line expected.
-    A "Si tu as des questions, vas les poser au Commandant du Bataillon d'Exploration, "/n" il est assez reconnaissable, à son armure !"
-                                                                                        ^
+File "game/script.rpy", line 54: indentation mismatch.
 
 Ren'Py Version: Ren'Py 6.99.12.4.2187

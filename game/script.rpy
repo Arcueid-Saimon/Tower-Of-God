@@ -9,6 +9,7 @@ init -1:
     python hide:
         config.developer = True
         config.window_title = "Tower of God"
+
 init 0:
     define A = Character("Alice",color="#c8ffc8")
     define v = Character("Vous",color="#c8ffc8")
@@ -23,11 +24,15 @@ init 0:
     image m3 = im.Scale("Characters/marquis_defensefierce.png",375,650)
     image bg mort = im.Scale("BG/FIRE.jpg",1280,720)
     image bg crypte = im.Scale("BG/blood_pond.jpg",1280,720)
+    image bg tunnel = im.Scale("BG/100420.jpg",1280,720)
     image levia = im.Scale("Mobs/leviathan.png",541,382)
+    image behem = im.Scale("Mobs/behemoth.png",541,382)
     image bg city = im.Scale("BG/watery_graveyard.jpg",1280,720)
     image bg blood = im.Scale("BG/blood_marsh.jpg",1280,720)
     #image satan = SnowBlossom("Sprites/bulletCa000.png",count = 10,border = 50,xspeed=(20, 10),yspeed=(100, 200),start=0,horizontal = False)
     image rain = SnowBlossom("Sprites/bulletLa002.png",count = 10,border = 50,xspeed=(20, 10),yspeed=(100, 200),start=0,horizontal = False)
+
+
 init python in mystore:
     import random
 
@@ -41,8 +46,12 @@ init python in mystore:
             valeur_totale = valeur_totale + d6_roll
         
         return valeur_totale
-        
+
+
 init python:
+
+    vpunch = Move((0, 10), (0, -10), .10, bounce=True, repeat=True, delay=.275)
+    hpunch = Move((15, 0), (-15, 0), .10, bounce=True, repeat=True, delay=.275)
     import store.mystore as mystore
 
     
@@ -229,7 +238,8 @@ init python:
             # since it expects horizontal and vertical positions to be integers, we have to convert
             # it (internal positions use float for smooth movements =D)
             return int(self.xpos), int(self.ypos), st, self.image
-            
+    
+    
 init 1: 
     image snow = Snow("Sprites/bulletLa002.png")
     image satan = Snow("Sprites/bulletBb002.png")
@@ -239,13 +249,15 @@ label start:
     python:
         renseignements = False
         mort_par_monstre = False
-        player_health = 1
+        player_health = 100
         enemy_health = 20
         max_player_health = 100
         max_enemy_health = 20
         fuite_faite = False
         levia_fuit = False
         levia_mort = False
+        behem_fuit = False
+        behem_mort = False
     play music "sounds/007.(未知Artist) - 青年の気ままな日常.mp3" fadeout 2.0
     scene bg noir
     v "..."
@@ -267,17 +279,19 @@ label start:
     A "Mais surtout ne t'avise pas d'y mettre les pieds..."
     A "De terribles choses s'y sont produites et personnes n'en est jamais ressorti vivant."
     A "Ah, Des clients ! Il faut que j'y aille !"
-    A "Si tu as des questions, vas les poser au Commandant du Bataillon d'Exploration, il est assez reconnaissable, à son armure !"
+    A "Si tu as des questions, vas les poser au commandant du Bataillon d'Exploration, il est assez reconnaissable, à son armure !"
     hide w3
-
+    n "Vous avancez, et rejoignez un groupe de personnes armées, parmis elle il y'en a une plutot imposante."
     v "... Euh excusez moi ?"
     show m1 at left
+    v "êtes vous Erwin? Le commandant du Bataillon d'Exploration?"
+
     g "Hein ? Oui, qu'y a-t-il ?"
     v "Pourriez-vous me donner quelques informations sur la tour des dieux ?"
     g "Ah ! Tu es un aventurier, n'est ce pas?"
     g "Mon dieu ! Pourquoi êtes-vous tous aussi suicidaires ? Cette tour est dangereuse, le savez-vous au moins ?"
     v "Oui, je le sais mais une force inconnue m'attire dans cette tour."
-    g "Si tu venais à t'approcher de la tour dans les environs, je voudrais d'abord te donner certains renseignements et conseils."
+    g "Si tu venais à t'approcher de la tour dans les environs, il faut en effet te donner certains renseignements et conseils."
     
     menu:
         "Accepter la proposition du chef de la garde":
@@ -319,6 +333,7 @@ label origines:
     
 label dangers:
     g "Des villageois ont rapporté à la garde avoir entendus des cris atroces provenant de la tour, ainsi que de nombreux bruits inhabituels."
+    g "à cela se rajoute la légende De Kratos, cet ancien héros qui, par avidité s'est rangé du côté des ténèbres."
     hide m2
     show m1 at left
     g "Malheureuseument, personne n'est en état de corroborer ces faits..."
@@ -338,7 +353,7 @@ label dangers:
         
 label bestiaire:
     g "Des ombres difformes ont été vues près de la tour et depuis personne au village n'ose s'y aventurer."
-    g "Ici, nous sommes trop superstitieux pour s'apporcher de nouveau de la tour."
+    g "Ici, nous sommes trop superstitieux pour s'approcher de nouveau de la tour."
     hide m2
     show m1 at left
     g "C'est pourquoi seuls de rares aventuriers s'approchent de la tour."
@@ -407,11 +422,15 @@ label foret:
     
     
     scene bg chemin
+    stop music
+    stop sound
+    play music "sounds/14 - Tonariawase no Jihen.mp3" fadeout 2.0
     n "Vous atteignez la tour et décidez d'entrer pour tenter votre chance."
+    play sound "sounds/door.mp3" fadeout 2.0
     n "La porte s'ouvre dans un long grincement puis vous y pénétrez."
     n "Aussitôt entré, aussitôt enfermé, la porte se referme sur vous."
     n "Il ne vous reste donc plus qu'un seul moyen de sortir d'ici, avancer vers l'inconnu !"
-    
+    stop sound
     jump entree
 
 label entree:
@@ -425,7 +444,7 @@ label entree:
     
 label rencontre_levia:
     stop music fadeout 1.0
-    play music "sounds/08.Kratos.mp3" fadein 1.0
+    play music "sounds/08.Kratos.mp3" fadeout 3.0
     show levia at truecenter
     n "Vous rencontrez une créature aux airs de serpent, vous vous approchez de lui avec méfiance."
     n "Que décidez-vous de faire?"
@@ -441,16 +460,21 @@ label fuite:
     if not fuite_faite:
         "Pour fuir, vous devrez obtenir moins de 3."
         $ fuite_faite = True
-    if fuir >= 3:
+    if fuir > 6:
         "Vous obtenez [fuir] au lancer de dé."
         "Vous ne parvenez pas à vous enfuir..."
         jump combat
     else:
+        play sound"sounds/running.mp3"
         "Vous obtenez [fuir] au lancer de dé"
         "Vous donc parvenez à vous enfuir !"
+        stop sound
         if not levia_fuit:
             $ levia_fuit = True
             jump suite_levia
+        if not behem_fuit:
+            $ behem_fuit = True
+            jump suite_Behem
     
 label combat:
     python:
@@ -458,8 +482,8 @@ label combat:
         enemy_damage = mystore.lancer_de(2)
         player_health = max(player_health - enemy_damage, 0)
         enemy_health = max(enemy_health - player_damage, 0)
-    "Vous infligez [player_damage] dégats à l'ennemi. Il lui reste [enemy_health]/[max_enemy_health] points de vie."
-    "L'ennemi vous a infligé [enemy_damage] dégats. Il vous reste [player_health]/[max_player_health] points de vie."
+    "Vous infligez [player_damage] dégats à l'ennemi. Il lui reste [enemy_health]/[max_enemy_health] points de vie." with vpunch
+    "L'ennemi vous a infligé [enemy_damage] dégats. Il vous reste [player_health]/[max_player_health] points de vie." with vpunch
     
     if player_health>0 and enemy_health>0:
             jump combat
@@ -471,12 +495,16 @@ label combat:
             if not levia_mort:
                 $ levia_mort = True
                 jump suite_levia
+            if not behem_mort:
+                $ behem_mort = True
+                jump suite_behem
         else:
             "L'ennemi était trop fort pour vous !"
             $ mort_par_monstre = True
             jump mort
             
 label suite_levia:
+    stop music
     show bg crypte
     hide levia
     if levia_mort:
@@ -502,9 +530,30 @@ label absorbe:
     show bg blood
     n " Vous atterissez sans problème mais déboussolé."
     n "Vous découvrez les terres marécageuses qui se profilent devant vous."
+    n "Il n'y plus de choix, vous devez avancer, l'odeur noséabonde vous monte au nez."
+    n" cependant au moment ou vous commencez à emboiter le pas, vous entendez d'étranges bruits"
+    n "Cela ressemble à des pas d'animaux, mais enorme..."
+    jump rencontre_behem
+    
+    
+label rencontre_behem:
+    show behem at truecenter
+    n "c'était bien un monstre, Un éléphant Géant, une Béhemoth, une créature sensé avoir disparu en même temps que les dragon..."
+    n " que faites vous?"
+    
+    menu:
+        "Combattre Le Béhemoth":
+            jump combat
+        "Tenter de fuir":
+            jump fuite
     
     return
-    
+
+label suite_behem:
+    hide behem
+    show bg tunnel
+    n "vous avez reussi à vous enfuir"
+
 label maudit:
     n "a faire"
     
