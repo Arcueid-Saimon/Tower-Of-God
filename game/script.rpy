@@ -22,6 +22,14 @@ init 0:
     image m1 = im.Scale("Characters/marquis_concerned.png",375,650)
     image m2 = im.Scale("Characters/marquis_smile.png",375,650)
     image m3 = im.Scale("Characters/marquis_defensefierce.png",375,650)
+    
+    define p = Character(" Pharaon ", color="#c8c8ff")
+    define r = Character(" Reine",color="#c8c8ff")
+    image phar = im.FactorScale("Characters/nefren-ka.png ",2,2)
+    image darkphar = im.FactorScale("Characters/nefren-ka2.png ",2,2)
+    image queen = im.FactorScale("Characters/nitocris.png ",2,2)
+    image darkqueen = im.FactorScale("Characters/nitocris2.png ",2,2)
+    
     image bg mort = im.Scale("BG/FIRE.jpg",1280,720)
     image bg crypte = im.Scale("BG/blood_pond.jpg",1280,720)
     image bg tunnel = im.Scale("BG/100420.jpg",1280,720)
@@ -474,7 +482,7 @@ label fuite:
             jump suite_levia
         if not behem_fuit:
             $ behem_fuit = True
-            jump suite_Behem
+            jump suite_behem
     
 label combat:
     python:
@@ -556,15 +564,65 @@ label suite_behem:
     n "vous avez reussi à vous enfuir"
 
 label maudit:
-    n "a faire"
-    
+    show phar at left
+    play music"sounds/25 - Dread.mp3" fadeout 2.0
+    p " Qui ose troubler mon sommeil ?! "
+    p " Cela faisait bien 3 millénaires que je dormais."
+    p " J'espère que tu as une bonne raison pour me réveiller !!! "
+    v " Je fouillais cette crypte quand j'ai ouvert ce tom... "
+    p " Quoi ?! Ma divine reine a disparu ! "
+    p " Comment est-ce possible ? "
+    p " Je... Je suis confus... "
+    p " Pourrais-tu te rendre utile ? "
+    p " Sache que je te récompenserais en cas de réussite. "
+    p " Si tu venais à croiser ma reine, envoie la ici je t'en serais reconnaissant, tu veux bien ? "
+    menu :
+        " Accepter sa requête " :
+            jump ray
+
+        " Rejeter sa requête ":
+            jump tp
     return
     
 label ray:
-    n "pareil"
-    
+    p " Tu as bien fait d'accepter, je n'aurais pas supporté de refus. "
+    n " Vous ne cherchez pas à savoir ce qui aurait pu vous arriver en refusant sa généreuse proposition de retrouver sa reine. "
+    n " Vous empruntez donc les escaliers pour continuer votre périple. "
     return
     
+label tp :
+    hide phar
+    show darkphar at left
+    p " Comment ! Tu t'opposes à ma volonté ? " with vpunch
+    p " Grossière erreur que tu viens de commettre. "
+    p " Fatale dans ton cas, malheureusement  pour toi. "
+    show darkqueen at right
+    r " Je n'en serais pas si sûre ! "
+    p " Ma reine, vous...vous aviez disparu. "
+    r " Il n'y a pas de vous qui tienne. "
+    r " Personne ne me dicte ma conduite."
+    p " Il en va de soit. "
+    r " Il en va aussi de soit que cet aventurier imprudent va disparaître de cette tour. "
+    hide darkqueen
+    hide darkphar
+    show phar at left
+    show queen at right
+    p " Bien sûr ! Et toi tu ne... "
+    n " La salle se met à tourbillonner, le sol disparaît, vous perdez l'équilibre, puis tout devient sombre. " with vpunch
+    hide phar
+    hide queen
+    scene bg foret1
+    with dissolve
+    show snow
+    n " Il semblerait que vous ayez été expulsé de la Tour de Dieu "
+    n " Vous tentez de reprendre le chemin en direction de la Tour mais une force invisible vous empêche d'avancer. "
+    n " Vous vous résolvez à rebrousser chemin. "
+    n " Vous rentrez bredouille au village, sain et sauf mais avec la cruelle impression d'avoir manqué quelque chose dans la Tour. "
+    n " Ainsi se termine votre aventure, et un pan de votre histoire. "
+    
+    return
+
+
 label mort:
     play music "sounds/10.Standing the Pain.mp3" fadeout 3.0
     scene bg mort
