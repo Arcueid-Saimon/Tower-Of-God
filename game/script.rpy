@@ -37,9 +37,6 @@ init 0:
     image behem = im.Scale("Mobs/behemoth.png",541,382)
     image bg city = im.Scale("BG/watery_graveyard.jpg",1280,720)
     image bg blood = im.Scale("BG/blood_marsh.jpg",1280,720)
-    #image satan = SnowBlossom("Sprites/bulletCa000.png",count = 10,border = 50,xspeed=(20, 10),yspeed=(100, 200),start=0,horizontal = False)
-    image rain = SnowBlossom("Sprites/bulletLa002.png",count = 10,border = 50,xspeed=(20, 10),yspeed=(100, 200),start=0,horizontal = False)
-
 
 init python in mystore:
     import random
@@ -266,6 +263,8 @@ label start:
         levia_mort = False
         behem_fuit = False
         behem_mort = False
+        levia_rencontrer = False
+        behem_rencontrer = False
     play music "sounds/007.(未知Artist) - 青年の気ままな日常.mp3" fadeout 2.0
     scene bg noir
     v "..."
@@ -280,7 +279,7 @@ label start:
     show w2 at left
     A "Il m'a semblé t'entendre mentionner une tour."
     A "Justement, il y en a une dans les environs."
-    A "C'est la légendaire Tour Des Dieux."
+    A "C'est la légendaire Tour de Dieu."
     A "L'un des seuls et derniers contacts que les humains peuvent avoir avec les Dieux et les Démons."
     hide w2
     show w3 at left
@@ -289,13 +288,12 @@ label start:
     A "Ah, Des clients ! Il faut que j'y aille !"
     A "Si tu as des questions, vas les poser au commandant du Bataillon d'Exploration, il est assez reconnaissable, à son armure !"
     hide w3
-    n "Vous avancez, et rejoignez un groupe de personnes armées, parmis elle il y'en a une plutot imposante."
+    n "Vous avancez, et rejoignez un groupe de personnes armées, parmi elle, un homme se démarque du lot."
     v "... Euh excusez moi ?"
     show m1 at left
-    v "êtes vous Erwin? Le commandant du Bataillon d'Exploration?"
-
+    v "Etes vous Erwin? Le commandant du Bataillon d'Exploration?"
     g "Hein ? Oui, qu'y a-t-il ?"
-    v "Pourriez-vous me donner quelques informations sur la tour des dieux ?"
+    v "Pourriez-vous me donner quelques informations sur la Tour de Dieu ?"
     g "Ah ! Tu es un aventurier, n'est ce pas?"
     g "Mon dieu ! Pourquoi êtes-vous tous aussi suicidaires ? Cette tour est dangereuse, le savez-vous au moins ?"
     v "Oui, je le sais mais une force inconnue m'attire dans cette tour."
@@ -341,7 +339,7 @@ label origines:
     
 label dangers:
     g "Des villageois ont rapporté à la garde avoir entendus des cris atroces provenant de la tour, ainsi que de nombreux bruits inhabituels."
-    g "à cela se rajoute la légende De Kratos, cet ancien héros qui, par avidité s'est rangé du côté des ténèbres."
+    g "A cela se rajoute la légende De Kratos, cet ancien héros qui, par avidité s'est rangé du côté des ténèbres."
     hide m2
     show m1 at left
     g "Malheureuseument, personne n'est en état de corroborer ces faits..."
@@ -417,11 +415,11 @@ label foret:
     show snow
     play sound "sounds/heavyrainthunder.mp3"
     play music "sounds/021.(未知Artist) - 揺らめく禁忌.mp3" fadein 2.0
-    v "wah.... Quelle foret, le mouvement des arbres et les rayons du soleil à travers les feuilles"
-    v " quels sont ces lumières? ça ne ressemble pas à de la pluie ni à ne la neige..."
-    v" Non c'est quelque chose de bien plus étrange que ça..."
-    v "je ne saurais dire pourquoi, mais j'ai un sentiment de nostalgie et de tristesse en voyant cette scène..."
-    v "Ah... non, je ne dois pas rester trop longtemps ici, il me faut aller à la tour"
+    v "Wah.... Quelle forêt, le mouvement des arbres et les rayons du soleil à travers les feuilles."
+    v "Quels sont ces lumières? ça ne ressemble pas à de la pluie ni à ne la neige..."
+    v" Non, c'est quelque chose de bien plus étrange que ça..."
+    v "Je ne saurais dire pourquoi, mais je ressent de la nostalgie et de la tristesse devant cette scène..."
+    v "Ah... non, je ne dois pas rester trop longtemps ici, il me faut aller à la tour."
     
     scene bg foret2
     
@@ -477,13 +475,17 @@ label fuite:
         "Vous obtenez [fuir] au lancer de dé"
         "Vous donc parvenez à vous enfuir !"
         stop sound
-        if not levia_fuit:
-            $ levia_fuit = True
-            jump suite_levia
-        if not behem_fuit:
-            $ behem_fuit = True
-            jump suite_behem
-    
+        if not levia_rencontrer:
+            if not levia_fuit:
+                $ levia_fuit = True
+                $ levia_rencontrer = True
+                jump suite_levia
+        if not behem_rencontrer:
+            if not behem_fuit:
+                $ behem_fuit = True
+                $ behem_rencontrer = True
+                jump suite_behem
+
 label combat:
     python:
         player_damage = mystore.lancer_de(2)
@@ -496,17 +498,20 @@ label combat:
     
     if player_health>0 and enemy_health>0:
             jump combat
-        
     else:
         if enemy_health == 0:
             "Vous avez triomphé de l'ennemi !"
             $enemy_health = max_enemy_health
-            if not levia_mort:
-                $ levia_mort = True
-                jump suite_levia
-            if not behem_mort:
-                $ behem_mort = True
-                jump suite_behem
+            if not levia_rencontrer:
+                if not levia_mort:
+                    $ levia_mort = True
+                    $ levia_rencontrer = True
+                    jump suite_levia
+            if not behem_rencontrer:
+                if not behem_mort:
+                    $ behem_mort = True
+                    $ behem_rencontrer = True
+                    jump suite_behem
         else:
             "L'ennemi était trop fort pour vous !"
             $ mort_par_monstre = True
@@ -537,22 +542,23 @@ label absorbe:
     n "Vous vous approchez donc du bassin, vous penchez pour vérifier que le liquide rouge est bien du sang."
     n "Ainsi vous tombez à la renverse et êtes absorbé par le bassin..."
     show bg blood
-    n " Vous atterissez sans problème mais déboussolé."
+    n "Vous atterissez sans problème mais déboussolé."
     n "Vous découvrez les terres marécageuses qui se profilent devant vous."
-    n "Il n'y plus de choix, vous devez avancer, l'odeur noséabonde vous monte au nez."
-    n" cependant au moment ou vous commencez à emboiter le pas, vous entendez d'étranges bruits"
-    n "Cela ressemble à des pas d'animaux, mais enorme..."
+    n "Il n'y plus de choix, vous devez avancer, l'odeur nauséabonde vous monte au nez."
+    n "Cependant au moment où vous commencez votre marche , vous entendez d'étranges bruits,"
+    n "Ressemblant à des pas d'animaux, mais énormes..."
     jump rencontre_behem
     
     
 label rencontre_behem:
     show behem at truecenter
-    n "c'était bien un monstre, Un éléphant Géant, une Béhemoth, une créature sensé avoir disparu en même temps que les dragon..."
-    n " que faites vous?"
+    n "C'était bien un monstre, un éléphant Géant, un Béhemoth, une créature sensée avoir disparu en même temps que les dragons..."
+    n "Que faites vous?"
     
     menu:
-        "Combattre Le Béhemoth":
+        "Combattre le Béhemoth":
             jump combat
+            
         "Tenter de fuir":
             jump fuite
     
@@ -561,8 +567,10 @@ label rencontre_behem:
 label suite_behem:
     hide behem
     show bg tunnel
-    n "vous avez reussi à vous enfuir"
-
+    n "Vous avez réussi à vous enfuir."
+    
+    return
+    
 label maudit:
     show phar at left
     play music"sounds/25 - Dread.mp3" fadeout 2.0
@@ -582,12 +590,12 @@ label maudit:
 
         " Rejeter sa requête ":
             jump tp
-    return
     
 label ray:
     p " Tu as bien fait d'accepter, je n'aurais pas supporté de refus. "
     n " Vous ne cherchez pas à savoir ce qui aurait pu vous arriver en refusant sa généreuse proposition de retrouver sa reine. "
     n " Vous empruntez donc les escaliers pour continuer votre périple. "
+    
     return
     
 label tp :
@@ -614,7 +622,7 @@ label tp :
     scene bg foret1
     with dissolve
     show snow
-    n " Il semblerait que vous ayez été expulsé de la Tour de Dieu "
+    n " Il semblerait que vous ayez été expulsé de la Tour de Dieu."
     n " Vous tentez de reprendre le chemin en direction de la Tour mais une force invisible vous empêche d'avancer. "
     n " Vous vous résolvez à rebrousser chemin. "
     n " Vous rentrez bredouille au village, sain et sauf mais avec la cruelle impression d'avoir manqué quelque chose dans la Tour. "
@@ -629,11 +637,12 @@ label mort:
     show satan
     if mort_par_monstre:
         "Vous avez succombé à vos blessures..."
-        "Les monstres de la tour sont sorti, et ont tout ravagés sur leurs passages..."
+        "Les monstres de la tour sont sortis, et ont tout ravagé sur leur passage..."
         "C'est la fin des temps de paix... Et le début de l'ère des démons et de la mort..."
     else:
         "L'aventure s'arrête ici pour vous ..."
-        "Les monstres de la tour sont sorti, et ont tout ravagés sur leurs passages..."
+        "Les monstres de la tour sont sortis, et ont tout ravagé sur leur passage..."
         "C'est la fin des temps de paix... Et le début de l'ère des démons et de la mort..."
     stop music
+    
     return
