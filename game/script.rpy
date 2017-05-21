@@ -265,6 +265,7 @@ label start:
         behem_mort = False
         levia_rencontrer = False
         behem_rencontrer = False
+        tentative_fuite = 0
     play music "sounds/007.(未知Artist) - 青年の気ままな日常.mp3" fadeout 2.0
     scene bg noir
     v "..."
@@ -416,7 +417,7 @@ label foret:
     play sound "sounds/heavyrainthunder.mp3"
     play music "sounds/021.(未知Artist) - 揺らめく禁忌.mp3" fadein 2.0
     v "Wah.... Quelle forêt, le mouvement des arbres et les rayons du soleil à travers les feuilles."
-    v "Quels sont ces lumières? ça ne ressemble pas à de la pluie ni à ne la neige..."
+    v "Quels sont ces lumières ? Cela ne ressemble ni à de la pluie ni à ne la neige..."
     v" Non, c'est quelque chose de bien plus étrange que ça..."
     v "Je ne saurais dire pourquoi, mais je ressent de la nostalgie et de la tristesse devant cette scène..."
     v "Ah... non, je ne dois pas rester trop longtemps ici, il me faut aller à la tour."
@@ -463,16 +464,17 @@ label rencontre_levia:
             
 label fuite:
     $ fuir = mystore.lancer_de(1)
+    $ tentative_fuite = tentative_fuite+1
     if not fuite_faite:
         "Pour fuir, vous devrez obtenir moins de 3."
         $ fuite_faite = True
-    if fuir > 6:
+    if fuir >= 3:
         "Vous obtenez [fuir] au lancer de dé."
         "Vous ne parvenez pas à vous enfuir..."
         jump combat
     else:
         play sound"sounds/running.mp3"
-        "Vous obtenez [fuir] au lancer de dé"
+        "Vous obtenez [fuir] au lancer de dé."
         "Vous donc parvenez à vous enfuir !"
         stop sound
         if not levia_rencontrer:
@@ -497,7 +499,15 @@ label combat:
     "L'ennemi vous a infligé [enemy_damage] dégats. Il vous reste [player_health]/[max_player_health] points de vie." with vpunch
     
     if player_health>0 and enemy_health>0:
-            jump combat
+        menu:
+            "Asséner un autre coup":
+                jump combat
+            "Tenter de fuir":
+                if tentative_fuite>=3:
+                    "Vous ne pouvez plus fuir."
+                    jump combat
+                else:
+                    jump fuite
     else:
         if enemy_health == 0:
             "Vous avez triomphé de l'ennemi !"
@@ -567,7 +577,10 @@ label rencontre_behem:
 label suite_behem:
     hide behem
     show bg tunnel
-    n "Vous avez réussi à vous enfuir."
+    if behem_fuit:
+        n "Vous avez réussi à vous enfuir."
+    else:
+        n "Vous avez réussi à terrasser ce mastodonte."
     
     return
     

@@ -248,13 +248,13 @@ screen quick_menu():
             xalign 0.5
             yalign 1.0
 
-            textbutton _("Back") action Rollback()
-            textbutton _("History") action ShowMenu('history')
-            textbutton _("Skip") action Skip() alternate Skip(fast=True, confirm=True)
+            textbutton _("Retour") action Rollback()
+            textbutton _("Histoire") action ShowMenu('history')
+            textbutton _("Passer") action Skip() alternate Skip(fast=True, confirm=True)
             textbutton _("Auto") action Preference("auto-forward", "toggle")
-            textbutton _("Save") action ShowMenu('save')
-            textbutton _("Q.Save") action QuickSave()
-            textbutton _("Q.Load") action QuickLoad()
+            textbutton _("Sauvegarder") action ShowMenu('save')
+            textbutton _("Sauve.rapide") action QuickSave()
+            textbutton _("Charge.rapide") action QuickLoad()
             textbutton _("Prefs") action ShowMenu('preferences')
 
 
@@ -296,17 +296,17 @@ screen navigation():
 
         if main_menu:
 
-            textbutton _("Start") action Start()
+            textbutton _("Commencer") action Start()
 
         else:
 
-            textbutton _("History") action ShowMenu("history")
+            textbutton _("Histoire") action ShowMenu("history")
 
-            textbutton _("Save") action ShowMenu("save")
+            textbutton _("Sauvegarder") action ShowMenu("save")
 
-        textbutton _("Load") action ShowMenu("load")
+        textbutton _("Charger") action ShowMenu("load")
 
-        textbutton _("Preferences") action ShowMenu("preferences")
+        textbutton _("Préférences") action ShowMenu("preferences")
 
         if _in_replay:
 
@@ -314,17 +314,17 @@ screen navigation():
 
         elif not main_menu:
 
-            textbutton _("Main Menu") action MainMenu()
+            textbutton _("Menu Principal") action MainMenu()
 
-        textbutton _("About") action ShowMenu("about")
+        textbutton _("A propos") action ShowMenu("about")
 
         if renpy.variant("pc"):
 
             ## Help isn't necessary or relevant to mobile devices.
-            textbutton _("Help") action ShowMenu("help")
+            textbutton _("Aide") action ShowMenu("help")
 
             ## The quit button is banned on iOS and unnecessary on Android.
-            textbutton _("Quit") action Quit(confirm=not main_menu)
+            textbutton _("Quitter") action Quit(confirm=not main_menu)
 
 
 style navigation_button is gui_button
