@@ -23,8 +23,8 @@ init 0:
     image m2 = im.Scale("Characters/marquis_smile.png",375,650)
     image m3 = im.Scale("Characters/marquis_defensefierce.png",375,650)
     
-    define p = Character(" Pharaon ", color="#c8c8ff")
-    define r = Character(" Reine",color="#c8c8ff")
+    define p = Character("Pharaon",color="#c8c8ff")
+    define r = Character("Reine",color="#c8c8ff")
     image phar = im.FactorScale("Characters/nefren-ka.png ",2,2)
     image darkphar = im.FactorScale("Characters/nefren-ka2.png ",2,2)
     image queen = im.FactorScale("Characters/nitocris.png ",2,2)
@@ -37,6 +37,19 @@ init 0:
     image behem = im.Scale("Mobs/behemoth.png",541,382)
     image bg city = im.Scale("BG/watery_graveyard.jpg",1280,720)
     image bg blood = im.Scale("BG/blood_marsh.jpg",1280,720)
+    image bg treeroom  = im.Scale("BG/f-tool.jpg",1280,720)
+    image bg sanctum = im.Scale("BG/jace_sanctum",1280,720)
+    image bg bossroom = im.Scale("BG/110614.jpg",1280,720)
+    image bg bossdemon = im.Scale("BG/demon.jpg",1280,720)
+    image bg cave = im.Scale("BG/100511.jpg",1280,720)
+    image bg redgate = im.Scale("BG/120721.jpg",1280,720)
+    image bg rockfield = im.Scale("BG/oubo_005.jpg",1280,720)
+    image bg sunny = im.Scale("BG/100420.jpg",1280,720)
+    image bg pyramid = im.Scale("BG/100315.jpg",1280,720)
+    image bg lavafield = im.Scale("BG/130528.jpg",1280,720)
+    define d = Character("Dieu",color="#c8c8ff")
+    image bg phoenix = im.Scale("BG/179.jpg",1280,720)
+    image ghost = im.FactorScale("Mobs/hisaruki-l.png",1.5,1.5)
 
 init python in mystore:
     import random
@@ -54,11 +67,10 @@ init python in mystore:
 
 
 init python:
-
+    import store.mystore as mystore
+     
     vpunch = Move((0,10), (0, -10), .10, bounce=True, repeat=True, delay=1.0)
     hpunch = Move((15,10), (15, 10), .10, bounce=True, repeat=True, delay=.275)
-    import store.mystore as mystore
-
     
     #################################################################
     # Here we use random module for some random stuffs (since we don't
@@ -265,7 +277,11 @@ label start:
         behem_mort = False
         levia_rencontrer = False
         behem_rencontrer = False
+        ghost_fuit = False
+        ghost_mort = False
+        ghost_rencontrer = False
         tentative_fuite = 0
+        pharaoh = False
     play music "sounds/007.(未知Artist) - 青年の気ままな日常.mp3" fadeout 2.0
     scene bg noir
     v "..."
@@ -487,7 +503,12 @@ label fuite:
                 $ behem_fuit = True
                 $ behem_rencontrer = True
                 jump suite_behem
-
+        if not ghost_rencontrer:
+            if not ghost_fuit:
+                $ ghost_fuit = True
+                $ ghost_rencontrer = True
+                jump balade
+                
 label combat:
     python:
         player_damage = mystore.lancer_de(2)
@@ -495,8 +516,8 @@ label combat:
         player_health = max(player_health - enemy_damage, 0)
         enemy_health = max(enemy_health - player_damage, 0)
     play sound"sounds/sword.mp3"
-    "Vous infligez [player_damage] dégats à l'ennemi. Il lui reste [enemy_health]/[max_enemy_health] points de vie." with vpunch
     "L'ennemi vous a infligé [enemy_damage] dégats. Il vous reste [player_health]/[max_player_health] points de vie." with vpunch
+    "Vous infligez [player_damage] dégats à l'ennemi. Il lui reste [enemy_health]/[max_enemy_health] points de vie." with vpunch
     
     if player_health>0 and enemy_health>0:
         menu:
@@ -522,6 +543,11 @@ label combat:
                     $ behem_mort = True
                     $ behem_rencontrer = True
                     jump suite_behem
+            if not ghost_rencontrer:
+                if not ghost_mort:
+                    $ ghost_mort = True
+                    $ ghost_rencontrer = True
+                    jump balade
         else:
             "L'ennemi était trop fort pour vous !"
             $ mort_par_monstre = True
@@ -577,69 +603,140 @@ label rencontre_behem:
 label suite_behem:
     hide behem
     show bg tunnel
-    if behem_fuit:
-        n "Vous avez réussi à vous enfuir."
-    else:
+    if not behem_fuit:
         n "Vous avez réussi à terrasser ce mastodonte."
+        
+    show bg cave
+    menu:
+        "Prendre le tunnel de gauche":
+            jump gate
+        
+        "Prendre le tunnel de droite":
+            jump field
+            
+label gate:
+    show bg redgate
+    n "Vous observez ce portail jusqu'au moment où un fantôme en sorte. " with vpunch
+    show ghost
+    n "Vous reculez et rebroussez chemin mais il vous poursuit."
+    menu:
+        "Se retourner vers lui et le combattre":
+            jump combat
+            
+        "Tenter une feinte et porfiter pour s'enfuir.":
+            jump fuite
+    
+label field:
+    show bg rockfield
+    n "Vous traversez ce bâtiment de pierre et empruntez le pont jusqu'à la porte massive."
+    n "Vous la poussez et..."
+    jump lavafield
+
+label lavafield:
+    show bg lava
+    n "...vous atteignez comme un champ de lave avec un autel au milieu."
+    with vpunch
     
     return
+    
+label balade:
+    show bg sunny
+    hide ghost
+    if ghost_mort:
+        n "Après avoir vaincu ce spectre, vous commencez votre marche."
+    else:
+        n "Après avoir habilé dupé ce spectre, vous entamez votre marche."
+    n "Vous marchez pendant des heures et des heures, le soleil traverse le ciel comme vous avez parcouru cette tour, en long en large et en travers."
+    n "Finalement, vous apercevez au loin la fin de votre périple."
+    jump pyr
+
+label pyr:
+    show bg pyramid
+    n "Vous arrivez devant cette pyramide sombre renversée."
+    n "Vous sentez qu'il émane une force importante de cette pierre."
+    n "Il semblerait que cette même pierre revêtisse une place cruciale dans la tour."
+    menu:
+        "Vous débarrasser de cette pyramide vraisemblablement à l'origine de cette tour.":
+            jump dieu
+            
+        "Laisser la force vous engloutir.":
+            jump dechu
+            
+label dieu:
+    show bg phoenix
+    d "Bravo, aventurier. Tu as su déjouer les pièges de la Tour et contrer les vils desseins de Kratos l'impur."
+    d "Pour avoir délivré ce monde, nous te nommons Héros du Monde !"
+    n "Vous avez été béni par les Dieux."
+    n "Cela ne fait aucun doute que votre épopée restera gravée à tout jamais dans l'histoire."
+    
+    return
+    
+label dechu:
+    n "La force vous a englouti, un autre aventurier qui l'a rejoint par cupidité." with vpunch
+    n "Le monde se sombre un peu plus dans le Chaos..."
+    jump mort
     
 label maudit:
     show phar at left
     play music"sounds/25 - Dread.mp3" fadeout 2.0
-    p " Qui ose troubler mon sommeil ?! "
-    p " Cela faisait bien 3 millénaires que je dormais."
-    p " J'espère que tu as une bonne raison pour me réveiller !!! "
-    v " Je fouillais cette crypte quand j'ai ouvert ce tom... "
-    p " Quoi ?! Ma divine reine a disparu ! "
-    p " Comment est-ce possible ? "
-    p " Je... Je suis confus... "
-    p " Pourrais-tu te rendre utile ? "
-    p " Sache que je te récompenserais en cas de réussite. "
-    p " Si tu venais à croiser ma reine, envoie la ici je t'en serais reconnaissant, tu veux bien ? "
+    $ pharaoh = True
+    p "Qui ose troubler mon sommeil ?!"
+    p "Cela faisait bien 3 millénaires que je dormais."
+    p "J'espère que tu as une bonne raison pour me réveiller !!!"
+    v "Je fouillais cette crypte quand j'ai ouvert ce tom..."
+    p "Quoi ?! Ma divine reine a disparu !"
+    p "Comment est-ce possible ?"
+    p "Je... Je suis confus..."
+    p "Pourrais-tu te rendre utile ?"
+    p "Sache que je te récompenserais en cas de réussite."
+    p "Si tu venais à croiser ma reine, envoie la ici je t'en serais reconnaissant, tu veux bien ?"
     menu :
-        " Accepter sa requête " :
+        "Accepter sa requête " :
             jump ray
 
-        " Rejeter sa requête ":
+        "Rejeter sa requête":
             jump tp
     
 label ray:
-    p " Tu as bien fait d'accepter, je n'aurais pas supporté de refus. "
-    n " Vous ne cherchez pas à savoir ce qui aurait pu vous arriver en refusant sa généreuse proposition de retrouver sa reine. "
-    n " Vous empruntez donc les escaliers pour continuer votre périple. "
-    
+    if pharaoh:
+        p "Tu as bien fait d'accepter, je n'aurais pas supporté de refus."
+        n "Vous ne cherchez pas à savoir ce qui aurait pu vous arriver en refusant sa généreuse proposition de retrouver sa reine."
+    n "Vous empruntez donc les escaliers pour continuer votre périple."
+    show bg treeroom
+    show bg sanctum
+    show bg bossroom
+    show bg bossdemon
     return
     
 label tp :
     hide phar
     show darkphar at left
-    p " Comment ! Tu t'opposes à ma volonté ? " with vpunch
-    p " Grossière erreur que tu viens de commettre. "
-    p " Fatale dans ton cas, malheureusement  pour toi. "
+    p "Comment ! Tu t'opposes à ma volonté ?" with vpunch
+    p "Grossière erreur que tu viens de commettre."
+    p "Fatale dans ton cas, malheureusement  pour toi."
     show darkqueen at right
-    r " Je n'en serais pas si sûre ! "
-    p " Ma reine, vous...vous aviez disparu. "
-    r " Il n'y a pas de vous qui tienne. "
-    r " Personne ne me dicte ma conduite."
-    p " Il en va de soit. "
-    r " Il en va aussi de soit que cet aventurier imprudent va disparaître de cette tour. "
+    r "Je n'en serais pas si sûre !"
+    p "Ma reine, vous...vous aviez disparu."
+    r "Il n'y a pas de vous qui tienne."
+    r "Personne ne me dicte ma conduite."
+    p "Il en va de soit."
+    r "Il en va aussi de soit que cet aventurier imprudent va disparaître de cette tour."
     hide darkqueen
     hide darkphar
     show phar at left
     show queen at right
-    p " Bien sûr ! Et toi tu ne... "
-    n " La salle se met à tourbillonner, le sol disparaît, vous perdez l'équilibre, puis tout devient sombre. " with vpunch
+    p "Bien sûr ! Et toi tu ne..."
+    n "La salle se met à tourbillonner, le sol disparaît, vous perdez l'équilibre, puis tout devient sombre." with vpunch
     hide phar
     hide queen
     scene bg foret1
     with dissolve
     show snow
-    n " Il semblerait que vous ayez été expulsé de la Tour de Dieu."
-    n " Vous tentez de reprendre le chemin en direction de la Tour mais une force invisible vous empêche d'avancer. "
-    n " Vous vous résolvez à rebrousser chemin. "
-    n " Vous rentrez bredouille au village, sain et sauf mais avec la cruelle impression d'avoir manqué quelque chose dans la Tour. "
-    n " Ainsi se termine votre aventure, et un pan de votre histoire. "
+    n "Il semblerait que vous ayez été expulsé de la Tour de Dieu."
+    n "Vous tentez de reprendre le chemin en direction de la Tour mais une force invisible vous empêche d'avancer."
+    n "Vous vous résolvez à rebrousser chemin."
+    n "Vous rentrez bredouille au village, sain et sauf mais avec la cruelle impression d'avoir manqué quelque chose dans la Tour."
+    jump mort
     
     return
 
